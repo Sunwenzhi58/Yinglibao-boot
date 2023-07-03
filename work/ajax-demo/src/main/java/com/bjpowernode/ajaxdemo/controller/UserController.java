@@ -30,7 +30,7 @@ public class UserController {
     //Post请求
     @PostMapping("/user/add")
     public User addUser(Integer id,String name){
-        System.out.println("user/add 接收前端的请求,id="+id+",name="+name);
+        System.out.println("====user/add 接收前端的请求,id="+id+",name="+name);
         User user = new User(id, "name", 20, "男");
         return user;
     }
