@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>学习axios</title>
+		<script src="js/axios.min.js"></script>
+	</head>
+	<body>
+		<div align="center">
+		 <button onclick="funGet()">使用axios发送get请求,无参数</button><br>
+		 <button onclick="get2()">使用axios发送get请求,有两个参数</button><br>
+		 <button onclick="get3()">使用axios发送get请求,有三个参数</button><br>
+		 <button onclick="post1()">使用axios发送get请求,有两个参数id=xxx&name==xxx</button><br>
+		</div>
+	</body>
+	<script>
+//		get请求
+//axios的格式 	axios.get(url).then().catch().finally()
+		function funGet(){
+			let url = "http://localhost:9000/api/user/query";
+			axios.get(url).then(resp =>{
+				//then是一个函数，表示请求成功时执行的
+				//resp是形参，服务器返回的数据，这个数据是由axios封装好的
+				console.log("请求成功，返回服务器的数据"+resp);
+			}).catch(err=>{
+				console.log("请求错误")
+			}).finally(()=>{
+				console.log("总是会执行的代码")
+			})
+			
+//			ajax.get(url).then( (userId,sex) =>{
+//				if(userId ==1001){
+//					return "lisi";
+//				}
+//			})
+//			//jquery执行ajax
+//			$.ajax({
+//				method:"get",
+//				url:"url",
+//				async:true,
+//				success:function(resp){}
+//			});
+//			
+//			//箭头函数
+//			function getName(userId){
+//				if(userId ==1001){
+//					return "lisi";
+//				}
+//			}
+
+
+		}
+ //get请求有两个参数，在url后面传递的 ？=参数名=值
+ function get2(){
+ 				let url = "http://localhost:9000/api/user/get?id=2000&name=周同学";
+ 				axios.get(url).then(resp=>{
+ 					console.log("传递参数成功，接收数据"+resp)
+ 				})
+
+ }
+ 
+ function get3(){
+ 	let url = "http://localhost:9000/api/user/get";
+ 	axios.get(url,{
+ 		params:{
+ 			id:30005,
+ 			name:'zhang同学'
+ 		}
+ 	}).then(resp=>{
+ 		console.log("服务器返回结果"+resp)
+ 	})
+ }
+ 
+ 
+ //post请求
+ function post1(){
+ 	 	let url = "http://localhost:9000/api/user/add";
+ 	    axios.post(url,"id=2345&name=zhangsan").then(resp=>{
+ 	    	console.log("post请求处理成功"+resp)
+ 	    })
+ }
+ 
+</script>
+</html>
