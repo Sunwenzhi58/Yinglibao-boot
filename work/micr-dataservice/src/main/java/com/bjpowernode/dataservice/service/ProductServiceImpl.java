@@ -64,5 +64,15 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+    //根据产品id来查询产品信息
+    @Override
+    public ProductInfo queryById(Integer id) {
+        ProductInfo productInfo = null;
+        if (id != null && id>0){
+            productInfo = productInfoMapper.selectByPrimaryKey(id);
+        }
+        return productInfo;
+    }
+
 
 }

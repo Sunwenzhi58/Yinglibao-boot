@@ -10,6 +10,7 @@ public enum RCode {
     SUCC(1000,"请求成功"),
     REQUEST_PARAM_ERR(1001,"请求参数有误"),
     REQUEST_PRODUCT_TYPE_ERR(1002,"产品类型有误"),
+    PRODUCT_OFFLINE(1003,"产品已经下线"),
 
     ;
     RCode(int c, String t){

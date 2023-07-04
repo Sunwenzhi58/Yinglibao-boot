@@ -1,12 +1,21 @@
 package com.bjpowernode.dataservice.mapper;
 
 import com.bjpowernode.api.model.BidInfo;
+import com.bjpowernode.api.pojo.BidInfoProduct;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface BidInfoMapper {
     //累计成交金额
     BigDecimal selectSumBigMoney();
+
+    //某个产品的投资记录
+    List<BidInfoProduct> selectByProductId(@Param("productId") Integer productId,
+                                           @Param("offset") int offset,
+                                           @Param("rows") Integer rows);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(BidInfo record);
@@ -18,4 +27,5 @@ public interface BidInfoMapper {
     int updateByPrimaryKeySelective(BidInfo record);
 
     int updateByPrimaryKey(BidInfo record);
+
 }
