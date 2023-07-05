@@ -28,3 +28,9 @@ dubbo:
     timeout: 50000
     retries: 0
 
+#短信配置
+jdwx:
+  sms:
+    url: https://way.jd.com/chuangxin/dxjk
+    appkey: 3680fa919b771148da626bbcbd459475
+    content: 【大富科技】你的验证码是：%s，3分钟内有效，请勿泄露给他人

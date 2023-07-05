@@ -24,6 +24,12 @@
     <select id="selectCountUser" resultType="java.lang.Integer">
        select count(id) as ct from u_user
     </select>
+<!--  //使用手机号查询用户-->
+    <select id="selectByPhone" resultMap="BaseResultMap">
+         select <include refid="Base_Column_List"></include>
+         from u_user
+         where phone=#{phone}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from u_user
     where id = #{id,jdbcType=INTEGER}

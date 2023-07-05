@@ -1,5 +1,7 @@
 package com.bjpowernode.common.util;
 
+import java.util.regex.Pattern;
+
 public class CommonUtil {
 
     //处理pageNo
@@ -27,5 +29,15 @@ public class CommonUtil {
             result = phone.substring(0,3)+"******"+phone.substring(9,11);
         }
         return result;
+    }
+
+    /*手机号格式 true:格式正确；false不正确*/
+    public static boolean checkPhone(String phone){
+        boolean flag = false;
+        if( phone != null && phone.length() == 11 ){
+            //^1[1-9]\\d{9}$
+            flag = Pattern.matches("^1[1-9]\\d{9}$",phone);
+        }
+        return flag;
     }
 }
