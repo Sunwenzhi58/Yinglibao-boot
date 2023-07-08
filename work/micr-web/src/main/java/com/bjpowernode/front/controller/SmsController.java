@@ -1,6 +1,9 @@
 package com.bjpowernode.front.controller;
 
 
+import com.bjpowernode.common.constants.RedisKey;
+import com.bjpowernode.common.enums.RCode;
+import com.bjpowernode.common.util.CommonUtil;
 import com.bjpowernode.front.service.SmsService;
 import com.bjpowernode.front.view.RespResult;
 import io.swagger.annotations.Api;
@@ -23,7 +26,23 @@ public class SmsController extends BaseController{
     @GetMapping("/code/register")
     public RespResult sendCodeRegister(@RequestParam String phone){
         RespResult result= RespResult.fail();
-        boolean isSuccess = smsService.sendSms(phone);
+
+        if(CommonUtil.checkPhone(phone)){
+            //判断redis中是否有这个手机号的验证码
+            String key = RedisKey.KEY_SMS_CODE_REG+phone;
+            if (stringRedisTemplate.hasKey(key)) {
+                result = RespResult.ok();
+                result.setRCode(RCode.SMS_CODE_CAN_USE);
+            }else {
+                boolean isSuccess = smsService.sendSms(phone);
+                if (isSuccess){
+                    result = RespResult.ok();
+                }
+            }
+
+        }else {
+            result.setRCode(RCode.PHONE_FORMAT_ERR);
+        }
         return result;
 
     }

@@ -9,4 +9,6 @@ public interface SmsService {
      * @return true：发送成功，false 其他情况
      */
     boolean sendSms(String phone);
+
+    boolean checkSmsCode(String phone,String code);
 }

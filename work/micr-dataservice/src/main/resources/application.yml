@@ -23,3 +23,8 @@ dubbo:
   provider:
     timeout: 50000
     retries: 0
+
+#密码的盐
+ylb:
+  config:
+    password-salt: fa51fsa15as1fsa5f15as1f5s15fa5fs

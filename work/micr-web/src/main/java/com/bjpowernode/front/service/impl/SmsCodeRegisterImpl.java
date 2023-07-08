@@ -1,6 +1,7 @@
 package com.bjpowernode.front.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bjpowernode.common.constants.RedisKey;
 import com.bjpowernode.front.config.JdwxSmsConfig;
 import com.bjpowernode.front.service.SmsService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -11,15 +12,19 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-
+import java.util.concurrent.TimeUnit;
 
 
 @Service
 public class SmsCodeRegisterImpl implements SmsService {
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Resource
     private JdwxSmsConfig smsConfig;
@@ -70,6 +75,10 @@ public class SmsCodeRegisterImpl implements SmsService {
                                 jsonObject.getJSONObject("result").getString("ReturnStatus"))){
                             //短信发送成功
                             send  = true;
+
+                            //把短信验证码存到redis
+                            String key = RedisKey.KEY_SMS_CODE_REG+phone;
+                            stringRedisTemplate.boundValueOps(key).set(random,3, TimeUnit.MINUTES);
                         }
                     }
                 }
@@ -78,5 +87,18 @@ public class SmsCodeRegisterImpl implements SmsService {
             e.printStackTrace();
         }
         return send;
+    }
+
+    @Override
+    public boolean checkSmsCode(String phone, String code) {
+        String key = RedisKey.KEY_SMS_CODE_REG+phone;
+        if (stringRedisTemplate.hasKey(key)){
+            String querySmsCode = stringRedisTemplate.boundValueOps(key).get();
+            if (code.equalsIgnoreCase(querySmsCode)){
+                return true;
+            }
+
+        }
+        return false;
     }
 }
