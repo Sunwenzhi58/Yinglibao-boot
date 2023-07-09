@@ -29,6 +29,21 @@ const routes = [
     name: 'ProductDetail',
     component: () => import('../views/RegisterView.vue')
   },
+  {
+    path: '/page/user/login',
+    name: 'LoginView',
+    component: () => import('../views/LoginView.vue')
+  },
+  {
+    path: '/page/user/realname',
+    name: 'RealName',
+    component: () => import('../views/RealNameView.vue')
+  },
+  {
+    path: '/page/user/usercenter',
+    name: 'UserCenterView',
+    component: () => import('../views/UserCenterView.vue')
+  },
 ]
 
 const router = createRouter({

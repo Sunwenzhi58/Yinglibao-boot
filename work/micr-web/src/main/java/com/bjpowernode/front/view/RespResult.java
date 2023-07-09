@@ -10,6 +10,8 @@ public class RespResult {
     private int code;
     //code的文字说明，一般做提示给用户看
     private String msg;
+    //访问token
+    private String accessToken;
     //单个数据
     private Object data;
     //集合数据
@@ -17,7 +19,13 @@ public class RespResult {
     //分页
     private PageInfo page;
 
+    public String getAccessToken() {
+        return accessToken;
+    }
 
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     //表示成功的RespResult对象
     public static RespResult ok(){

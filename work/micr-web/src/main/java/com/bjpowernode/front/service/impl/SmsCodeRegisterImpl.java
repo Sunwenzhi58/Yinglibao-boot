@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 
-@Service
+@Service(value = "smsCodeRegisterImpl")
 public class SmsCodeRegisterImpl implements SmsService {
 
     @Resource

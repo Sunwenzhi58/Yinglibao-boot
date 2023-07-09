@@ -22,7 +22,7 @@
         </ul>
       </div>
       <div class="public-head-right">
-        <a href="login.html" target="_blank">登录</a>
+        <a href="javascript:void(0)" @click="goLink('/page/user/login')">登录</a>
         <a href="javascript:void(0)" @click="goLink('/page/user/register')">注册</a>
       </div>
     </div>

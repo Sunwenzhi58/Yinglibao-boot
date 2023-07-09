@@ -1,9 +1,6 @@
 package com.bjpowernode.common.enums;
 
-/**
- * Package:com.bjpowernode.common.enums
- * Date:2022/3/3 15:30
- */
+
 public enum RCode {
 
     UNKOWN(0,"请稍候重试"),
@@ -15,6 +12,7 @@ public enum RCode {
     PHONE_EXISTS(1005,"手机号已经注册过"),
     SMS_CODE_CAN_USE(1006,"验证码可以继续使用"),
     SMS_CODE_INVALID(1007,"验证码无效"),
+    PHONE_LOGIN_PASSWORD_INVALID(1008,"手机号或密码无效"),
 
     ;
     RCode(int c, String t){

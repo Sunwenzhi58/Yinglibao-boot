@@ -7,5 +7,7 @@ public class RedisKey{
 
     //注册时，短信验证码，SMS:CODE:REG:手机号
     public static final String KEY_SMS_CODE_REG="SMS:REG:";
+    //登录时，短信验证码，SMS:CODE:REG:手机号
+    public static final String KEY_SMS_CODE_LOGIN="SMS:REG:";
 
 }

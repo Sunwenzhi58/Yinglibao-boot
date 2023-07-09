@@ -34,3 +34,8 @@ jdwx:
     url: https://way.jd.com/chuangxin/dxjk
     appkey: 3680fa919b771148da626bbcbd459475
     content: 【大富科技】你的验证码是：%s，3分钟内有效，请勿泄露给他人
+    login-text: 【大富科技】你的验证码是：%s，3分钟内有效，请勿泄露给他人
+
+jwt:
+  secret: 95dff70708e84ec8a329842839c11eb4
+

@@ -156,7 +156,7 @@ input:-ms-input-placeholder{
     width: 40%;
     text-align: right;
     cursor: pointer;
-    color: #688EF9;
+    color: #688EF9#688EF9;
 }
 .login-content .login-flex .login-box .alert-input-btn{
     -webkit-box-sizing: border-box;

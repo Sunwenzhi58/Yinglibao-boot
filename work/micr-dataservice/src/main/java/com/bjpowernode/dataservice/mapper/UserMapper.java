@@ -25,4 +25,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
 
+    /*登录*/
+    User selectLogin(@Param("phone") String phone, @Param("loginPassword") String newPassword);
 }

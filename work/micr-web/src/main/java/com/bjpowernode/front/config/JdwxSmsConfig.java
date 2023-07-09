@@ -13,6 +13,15 @@ public class JdwxSmsConfig {
     private String url;
     private String appkey;
     private String content;
+    private String loginText;
+
+    public String getLoginText() {
+        return loginText;
+    }
+
+    public void setLoginText(String loginText) {
+        this.loginText = loginText;
+    }
 
     public String getUrl() {
         return url;

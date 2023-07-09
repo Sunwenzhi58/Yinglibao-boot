@@ -72,4 +72,22 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
+    /*登录*/
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public User userLogin(String phone, String password) {
+
+        User user = null;
+        if( CommonUtil.checkPhone(phone) && (password != null && password.length() == 32)) {
+            String newPassword = DigestUtils.md5Hex( password + passwordSalt);
+            user = userMapper.selectLogin(phone,newPassword);
+            //更新最后登录时间
+            if( user != null){
+                user.setLastLoginTime(new Date());
+                userMapper.updateByPrimaryKeySelective(user);
+            }
+        }
+        return user;
+    }
 }
