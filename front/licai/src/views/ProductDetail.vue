@@ -82,7 +82,7 @@
             <p>请在下方输入投资金额</p>
             <input type="text" placeholder="请输入日投资金额，应为100元整倍数" v-model="investMoney" @blur="checkInvestMoney" class="number-money" >
             <div class="err">{{investMoneyErr}}</div>
-            <input type="submit" value="立即投资" class="submit-btn">
+            <input type="button" value="立即投资" @click="investProduct" class="submit-btn">
           </form>
 
 
@@ -97,7 +97,8 @@
 <script>
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
-import {doGet} from "@/api/httpRequest";
+import {doGet, doPost} from "@/api/httpRequest";
+import layx from "vue-layx";
 
 export default {
   name: "ProductDetail",
@@ -144,23 +145,8 @@ export default {
     if( window.localStorage.getItem("userinfo")){
       this.logined = true;
     }
+    this.initPage();
 
-    //查询产品信息
-    let productId = this.$route.query.productId;
-    doGet('/v1/product/info',{productId:productId})
-        .then(resp=>{
-          if( resp ) {
-            this.product = resp.data.data;
-            this.bidList = resp.data.list;
-          }
-        })
-
-    //查询资金
-    doGet('/v1/user/usercenter').then(resp=>{
-      if( resp && resp.data.code == 1000){
-        this.accountMoney = resp.data.data.money;
-      }
-    })
   },
   methods:{
     goLink(url,params){
@@ -168,6 +154,24 @@ export default {
       this.$router.push({
         path: url,
         query: params
+      })
+    },
+    initPage(){
+      //查询产品信息
+      let productId = this.$route.query.productId;
+      doGet('/v1/product/info',{productId:productId})
+          .then(resp=>{
+            if( resp ) {
+              this.product = resp.data.data;
+              this.bidList = resp.data.list;
+            }
+          })
+
+      //查询资金
+      doGet('/v1/user/usercenter').then(resp=>{
+        if( resp && resp.data.code == 1000){
+          this.accountMoney = resp.data.data.money;
+        }
       })
     },
     checkInvestMoney(){
@@ -192,10 +196,36 @@ export default {
           incomeMoney = this.investMoney * (this.product.cycle * 30) * dayRate;
         }
         this.income = incomeMoney.toFixed(2);
-        console.log( "incomeMoney=="+incomeMoney)
-
-
       }
+    },
+    investProduct(){
+      //登录， 实名认证过
+      let userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
+      if( userinfo ) {
+        //检查是否有实名认证
+        if(userinfo.name != ''){
+          //投资
+          this.checkInvestMoney();
+          if(this.investMoneyErr == ''){
+            doPost('/v1/invest/product',{ productId: this.product.id, money:this.investMoney})
+                .then(resp=>{
+                  if( resp  && resp.data.code == 1000){
+                    //投资成功
+                    this.initPage();
+                  }
+                })
+          }
+        } else {
+          //进行实名认证
+          layx.msg('投资前需要实名认证.',{dialogIcon:'warn',position:'ct'});
+        }
+      } else {
+        //去登录
+        layx.msg('请先登录.',{dialogIcon:'warn',position:'ct'});
+      }
+
+
+
     }
   }
 }

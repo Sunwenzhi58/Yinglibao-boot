@@ -21,6 +21,7 @@
         <module>../micr-api</module>
         <module>../micr-dataservice</module>
         <module>../micr-web</module>
+        <module>../micr-task</module>
         <module>../micr-common</module>
     </modules>
 
