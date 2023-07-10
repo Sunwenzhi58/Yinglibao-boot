@@ -15,6 +15,14 @@
     from u_finance_account
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!--/*给uid的记录上锁*/-->
+  <select id="selectByUidForUpdate" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from u_finance_account
+    where uid = #{uid}
+    for update
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from u_finance_account
     where id = #{id,jdbcType=INTEGER}
@@ -67,5 +75,10 @@
     set uid = #{uid,jdbcType=INTEGER},
       available_money = #{availableMoney,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!--更新资金-->
+  <update id="updateAvailableMoneyByInvest">
+    update   u_finance_account set available_money = available_money - #{money}
+    where uid = #{uid} and ( available_money - #{money} >=0 )
   </update>
 </mapper>

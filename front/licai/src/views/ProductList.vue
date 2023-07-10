@@ -36,7 +36,7 @@
           <p class="preferred-select-txt">
             优选计划项目，投资回报周期{{product.cycle}}个月，起点低，适合短期资金周转、对流动性要求高的投资人。
           </p>
-          <a href="javascript:;" target="_blank" class="preferred-select-btn">立即投资</a>
+          <a href="javascript:void(0);" @click="goLink('/page/product/detail',{productId: product.id})" class="preferred-select-btn">立即投资</a>
         </li>
 
       </ul>
@@ -114,6 +114,13 @@ export default {
 
   },
   methods:{
+    goLink(url,params){
+      //使用router做页面跳转， vue中的对象
+      this.$router.push({
+        path: url,
+        query: params
+      })
+    },
     initPage(productType,pNo,pSize){
       //获取服务器的数据
       doGet('/v1/invest/rank').then(resp=>{

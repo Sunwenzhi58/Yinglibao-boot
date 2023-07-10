@@ -21,6 +21,16 @@
     from b_recharge_record
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--按userId查询充值记录-->
+  <select id="selectByUid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from b_recharge_record
+    where uid= #{uid}
+    order by recharge_time desc
+    limit #{offset},#{rows}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from b_recharge_record
     where id = #{id,jdbcType=INTEGER}

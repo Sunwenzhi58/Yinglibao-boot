@@ -1,5 +1,6 @@
 package com.bjpowernode.common.util;
 
+import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 public class CommonUtil {
@@ -39,5 +40,13 @@ public class CommonUtil {
             flag = Pattern.matches("^1[1-9]\\d{9}$",phone);
         }
         return flag;
+    }
+
+    /*比较BigDecimal  n1 >=2 :true ,false*/
+    public static boolean ge(BigDecimal n1, BigDecimal n2){
+        if( n1 == null || n2 == null){
+            throw new RuntimeException("参数BigDecimal是null");
+        }
+        return  n1.compareTo(n2) >= 0;
     }
 }

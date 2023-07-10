@@ -1,14 +1,19 @@
 package com.bjpowernode.front.controller;
 
 import com.bjpowernode.api.model.User;
+import com.bjpowernode.api.pojo.UserAccountInfo;
 import com.bjpowernode.common.enums.RCode;
 import com.bjpowernode.common.util.CommonUtil;
 import com.bjpowernode.common.util.JwtUtil;
+import com.bjpowernode.front.service.RealnameServiceImpl;
 import com.bjpowernode.front.service.SmsService;
 import com.bjpowernode.front.view.RespResult;
+import com.bjpowernode.front.vo.RealnameVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,6 +30,9 @@ public class UserController extends BaseController{
 
     @Resource(name = "smsCodeLoginImpl")
     private SmsService loginSmsService;
+
+    @Resource
+    private RealnameServiceImpl realnameService;
 
 //    @Resource
 //    private RealnameServiceImpl realnameService;
@@ -127,5 +135,70 @@ public class UserController extends BaseController{
 
 
         return result;
+    }
+
+    /** 实名认证  vo: value object*/
+    @ApiOperation(value = "实名认证",notes = "提供手机号和姓名，身份证号。 认证姓名和身份证号是否一致")
+    @PostMapping("/realname")
+    public RespResult userRealname(@RequestBody RealnameVO realnameVO){
+        RespResult result = RespResult.fail();
+        result.setRCode(RCode.REQUEST_PARAM_ERR);
+        //1验证请求参数
+        if( CommonUtil.checkPhone(realnameVO.getPhone())){
+            if(StringUtils.isNotBlank(realnameVO.getName()) &&
+                    StringUtils.isNotBlank(realnameVO.getIdCard())){
+
+                //判断用户已经做过
+                User user = userService.queryByPhone(realnameVO.getPhone());
+                if( user != null ){
+                    if( StringUtils.isNotBlank(user.getName())){
+                        result.setRCode(RCode.REALNAME_RETRY);
+                    } else {
+                        //有短信验证码，先不写
+                        //调用第三方接口，判断认证结果
+                        boolean realnameResult  = realnameService.handleRealname(
+                                realnameVO.getPhone(),realnameVO.getName(),
+                                realnameVO.getIdCard());
+                        if( realnameResult == true ){
+                            result = RespResult.ok();
+                        } else {
+                            result.setRCode(RCode.REALNAME_FAIL);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /** 用户中心 */
+    @ApiOperation(value = "用户中心")
+    @GetMapping("/usercenter")
+    public RespResult userCenter(@RequestHeader("uid") Integer uid){
+        RespResult result  = RespResult.fail();
+        if( uid != null && uid > 0 ){
+            UserAccountInfo userAccountInfo = userService.queryUserAllInfo(uid);
+            if( userAccountInfo != null ){
+                result = RespResult.ok();
+
+                Map<String,Object> data = new HashMap<>();
+                data.put("name",userAccountInfo.getName());
+                data.put("phone",userAccountInfo.getPhone());
+                data.put("headerUrl",userAccountInfo.getHeaderImage());
+                data.put("money",userAccountInfo.getAvailableMoney());
+                if( userAccountInfo.getLastLoginTime() != null){
+                    data.put("loginTime", DateFormatUtils.format(
+                            userAccountInfo.getLastLoginTime(),"yyyy-MM-dd HH:mm:ss"));
+                } else  {
+                    data.put("loginTime","-");
+                }
+                result.setData(data);
+
+            }
+        }
+
+
+        return result;
+
     }
 }

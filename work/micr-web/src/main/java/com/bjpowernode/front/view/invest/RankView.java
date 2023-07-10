@@ -1,7 +1,7 @@
-package com.bjpowernode.front.view;
+package com.bjpowernode.front.view.invest;
+
 
 public class RankView {
-
     private String phone;
     private Double money;
 

@@ -13,6 +13,9 @@ public enum RCode {
     SMS_CODE_CAN_USE(1006,"验证码可以继续使用"),
     SMS_CODE_INVALID(1007,"验证码无效"),
     PHONE_LOGIN_PASSWORD_INVALID(1008,"手机号或密码无效"),
+    REALNAME_FAIL(1009,"实名认证无效"),
+    REALNAME_RETRY(1010,"已经通过实名认证"),
+    TOKEN_INVALID(3000,"token无效")
 
     ;
     RCode(int c, String t){

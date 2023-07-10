@@ -28,4 +28,11 @@ public interface ProductInfoMapper {
     int updateByPrimaryKeySelective(ProductInfo record);
 
     int updateByPrimaryKey(ProductInfo record);
+
+    /*扣除产品剩余可投资金额*/
+    int updateLeftProductMoney(@Param("id") Integer productId, @Param("money") BigDecimal money);
+
+
+    /*更新产品为满标*/
+    int updateSelled(@Param("id") Integer productId);
 }

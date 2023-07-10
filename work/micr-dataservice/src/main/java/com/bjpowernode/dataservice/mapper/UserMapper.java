@@ -1,6 +1,7 @@
 package com.bjpowernode.dataservice.mapper;
 
 import com.bjpowernode.api.model.User;
+import com.bjpowernode.api.pojo.UserAccountInfo;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
@@ -27,4 +28,10 @@ public interface UserMapper {
 
     /*登录*/
     User selectLogin(@Param("phone") String phone, @Param("loginPassword") String newPassword);
+
+    /*更新实名认证信息*/
+    int updateRealname(@Param("phone") String phone, @Param("name") String name, @Param("idCard") String idCard);
+
+    /*查询用户信息*/
+    UserAccountInfo selectUserAccountById(@Param("uid") Integer uid);
 }

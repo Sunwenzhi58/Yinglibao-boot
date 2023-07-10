@@ -1,6 +1,7 @@
 package com.bjpowernode.api.service;
 
 import com.bjpowernode.api.model.User;
+import com.bjpowernode.api.pojo.UserAccountInfo;
 
 public interface UserService {
 
@@ -12,4 +13,13 @@ public interface UserService {
 
     /*登录*/
     User userLogin(String phone, String pword);
+
+    //更新实名认证的信息
+    boolean modifyRealname(String phone, String name, String idCard);
+
+    /*获取用户和资金信息*/
+    UserAccountInfo queryUserAllInfo(Integer uid);
+
+    /*查询用户*/
+    User queryById(Integer uid);
 }

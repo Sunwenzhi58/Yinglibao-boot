@@ -227,5 +227,16 @@
       product_desc = #{productDesc,jdbcType=VARCHAR},
       version = #{version,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
+  </update><!--扣除产品剩余可投资金额-->
+  <update id="updateLeftProductMoney">
+    update b_product_info set left_product_money = left_product_money - #{money}
+    where id = #{id} and ( left_product_money - #{money} >=0 )
   </update>
+
+  <!--*更新产品为满标-->
+  <update id="updateSelled">
+    update  b_product_info set product_status = 1 ,  product_full_time = now()
+    where id = #{id}
+  </update>
+
 </mapper>
