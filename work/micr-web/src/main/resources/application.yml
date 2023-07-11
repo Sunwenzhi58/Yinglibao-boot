@@ -13,6 +13,7 @@ server:
   servlet:
     context-path: /api
     encoding:
+      enabled: true
       charset: utf-8
       force: true
 

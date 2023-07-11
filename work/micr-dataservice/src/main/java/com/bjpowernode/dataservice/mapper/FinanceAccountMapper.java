@@ -22,4 +22,13 @@ public interface FinanceAccountMapper {
     FinanceAccount selectByUidForUpdate(@Param("uid") Integer uid);
 
     /*更新资金*/
-    int updateAvailableMoneyByInvest(@Param("uid") Integer uid, @Param("money") BigDecimal money);}
+    int updateAvailableMoneyByInvest(@Param("uid") Integer uid, @Param("money") BigDecimal money);
+
+    /*收益返还，更新资金*/
+    int updateAvailableMoneyByIncomeBack(@Param("uid") Integer uid,
+                                         @Param("bidMoney") BigDecimal bidMoney,
+                                         @Param("incomeMoney") BigDecimal incomeMoney);
+
+    /*充值更新金额*/
+    int updateAvailableMoneyByRecharge(@Param("uid") Integer uid, @Param("rechargeMoney") BigDecimal rechargeMoney);
+}

@@ -21,4 +21,9 @@ public interface RechargeRecordMapper {
     List<RechargeRecord> selectByUid(@Param("uid") Integer uid,
                                      @Param("offset") int offset,
                                      @Param("rows") Integer rows);
+
+    RechargeRecord selectByRechargeNo(@Param("rechargeNo") String orderId);
+
+    /*更新状态*/
+    int updateStatus(@Param("id") Integer id, @Param("newStatus") int rechargeStatusSuccess);
 }

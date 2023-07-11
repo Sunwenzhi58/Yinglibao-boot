@@ -28,4 +28,6 @@ public interface BidInfoMapper {
 
     int updateByPrimaryKey(BidInfo record);
 
+    /*某个产品的投资记录*/
+    List<BidInfo> selectByProdId(@Param("productId") Integer productId);
 }

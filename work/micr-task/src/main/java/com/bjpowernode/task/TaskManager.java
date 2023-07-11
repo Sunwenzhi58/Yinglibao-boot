@@ -1,13 +1,16 @@
 package com.bjpowernode.task;
 
-//import com.bjpowernode.api.service.IncomeService;
+import com.bjpowernode.api.service.IncomeService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-
+/**
+ * Package:com.bjpowernode.task
+ * Date:2022/3/15 10:33
+ */
 @Component("taskManager")
 public class TaskManager {
 
@@ -25,19 +28,25 @@ public class TaskManager {
     }*/
 
 
-     @Scheduled(cron = "*/5 * * * * ?")
-     public void testCron(){
+    // @Scheduled(cron = "*/5 * * * * ?")
+    /* public void testCron(){
 
         System.out.println("执行了定时任务的方法："+ new Date());
     }
+    */
 
+    @DubboReference(interfaceClass = IncomeService.class, version = "1.0")
+    private IncomeService incomeService;
 
-//    @DubboReference(interfaceClass = IncomeService.class, version = "1.0")
-//    private IncomeService incomeService;
-//
-//    /*生成收益计划*/
-//    @Scheduled(cron = "0 0 1 * * ?")
-//    public void invokeGenerateIncomePlan() {
-//        incomeService.generateIncomePlan();
-//    }
+    /*生成收益计划*/
+    @Scheduled(cron = "0 0 1 * * ?")
+    public void invokeGenerateIncomePlan() {
+        incomeService.generateIncomePlan();
+    }
+
+    /*生成收益返还*/
+    @Scheduled(cron = "0 0 2 * * ?")
+    public void invokeGenerateIncomeBack() {
+        incomeService.generateIncomeBack();
+    }
 }

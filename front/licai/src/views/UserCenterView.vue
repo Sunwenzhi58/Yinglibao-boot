@@ -18,7 +18,8 @@
           </ul>
           <div class="user-head-money fr">
             <p>可用余额：<span>￥{{ userBaseInfo.money }}元</span></p>
-            <a href="user_pay.html" style="color: red" class="user-head-a1">充值</a>
+            <a href="javascript:void(0)" @click="goLink('/page/user/userpay')"
+               style="color: red" class="user-head-a1">充值</a>
             <a href="details.html"  style="color: red" class="user-head-a2">投资</a>
           </div>
         </div>
@@ -101,7 +102,8 @@
             </tbody>
           </table>
           <!--无记录-->
-          <p class="user-record-no">还没有充值记录，请充值：<a href="user_pay.html" target="_blank">充值</a></p>
+          <p class="user-record-no">还没有充值记录，请充值：
+            <a href="javascript:void(0)" @click="goLink('/page/user/userpay')">充值</a></p>
         </div>
         <div class="user-record user-record-3">
           <h3 class="user-record-title ">最近收益</h3>
@@ -212,7 +214,17 @@ export default {
       }
     })
 
+  },
+  methods:{
+    goLink(url,params){
+      //使用router做页面跳转， vue中的对象
+      this.$router.push({
+        path: url,
+        query: params
+      })
+    }
   }
+
 }
 </script>
 

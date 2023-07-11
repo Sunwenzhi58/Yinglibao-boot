@@ -20,7 +20,17 @@
     from b_income_record
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <!--到期的收益记录-->
+  <select id="selectExpiredIncome" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    b_income_record
+    WHERE
+    income_status = 0
+    AND income_date = #{expiredDate}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from b_income_record
     where id = #{id,jdbcType=INTEGER}
   </delete>

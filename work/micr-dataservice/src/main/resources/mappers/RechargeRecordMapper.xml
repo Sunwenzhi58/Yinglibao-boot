@@ -30,6 +30,13 @@
     order by recharge_time desc
     limit #{offset},#{rows}
   </select>
+  <!--根据订单号，查询记录-->
+  <select id="selectByRechargeNo" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from b_recharge_record
+    where recharge_no = #{rechargeNo} for update
+  </select>
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from b_recharge_record
@@ -135,5 +142,8 @@
       recharge_desc = #{rechargeDesc,jdbcType=VARCHAR},
       channel = #{channel,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateStatus">
+    update b_recharge_record set  recharge_status = #{newStatus} where id = #{id}
   </update>
 </mapper>

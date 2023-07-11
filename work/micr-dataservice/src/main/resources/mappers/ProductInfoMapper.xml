@@ -45,6 +45,18 @@
   <select id="selectCountByType" resultType="java.lang.Integer">
     select count(id) as nums from b_product_info where product_type = #{ptype}
   </select>
+  <!--满标的理财列表-->
+  <select id="selectFullTimeProducts" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    b_product_info
+    WHERE
+    product_status = 1
+    AND product_full_time >= #{beginTime}  AND product_full_time &lt; #{endTime}
+    order by id
+  </select>
+
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -238,5 +250,11 @@
     update  b_product_info set product_status = 1 ,  product_full_time = now()
     where id = #{id}
   </update>
+
+  <!--更新状态-->
+  <update id="updateStatus">
+    update  b_product_info  set  product_status = #{newStatus} where id = #{id}
+  </update>
+
 
 </mapper>

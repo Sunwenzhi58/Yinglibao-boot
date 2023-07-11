@@ -44,6 +44,11 @@ const routes = [
     name: 'UserCenterView',
     component: () => import('../views/UserCenterView.vue')
   },
+  {
+    path: '/page/user/userpay',
+    name: 'UserPayView',
+    component: () => import('../views/UserPayView.vue')
+  }
 ]
 
 const router = createRouter({

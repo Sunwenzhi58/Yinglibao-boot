@@ -6,7 +6,7 @@ dubbo:
   scan:
     base-packages: com.bjpowernode.task
   registry:
-    address: zookeepr://localhost:2181
+    address: zookeeper://localhost:2181
   consumer:
     timeout: 50000
     check: false
